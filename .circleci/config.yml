@@ -32,6 +32,9 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: "Build Docker image"
+          command: docker build -t cibuilds/chrome-extension:$CIRCLE_SHA1 .
+      - run:
           name: "Publish images to Docker Hub if neccessary"
           command: |
             docker images --format "{{.ID}}" cibuilds/chrome-extension:$CIRCLE_SHA1 > current_image_id
